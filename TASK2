@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="quiz-container" id="quiz">
+        <div id="question-container" class="hide">
+            <div id="question">Question text</div>
+            <div id="answer-buttons" class="btn-container"></div>
+        </div>
+        <div class="controls">
+            <button id="start-btn" class="btn">Start</button>
+            <button id="next-btn" class="btn hide">Next</button>
+        </div>
+    </div>
+    <div id="result-container" class="hide">
+        <h2>Your Score: <span id="score"></span></h2>
+        <button id="restart-btn" class="btn">Restart Quiz</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f4f4f4;
+    margin: 0;
+}
+
+.quiz-container {
+    width: 300px;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.btn-container {
+    margin-top: 20px;
+}
+
+.btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+.hide {
+    display: none;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+}
+
+#result-container {
+    text-align: center;
+}
+
+const startButton = document.getElementById('start-btn');
+const nextButton = document.getElementById('next-btn');
+const restartButton = document.getElementById('restart-btn');
+const questionContainer = document.getElementById('question-container');
+const resultContainer = document.getElementById('result-container');
+const questionElement = document.getElementById('question');
+const answerButtonsElement = document.getElementById('answer-buttons');
+const scoreElement = document.getElementById('score');
+
+let shuffledQuestions, currentQuestionIndex;
+let score = 0;
+
+const questions = [
+    {
+        question: 'What is the capital of France?',
+        answers: [
+            { text: 'Paris', correct: true },
+            { text: 'London', correct: false },
+            { text: 'Berlin', correct: false },
+            { text: 'Madrid', correct: false }
+        ]
+    },
+    {
+        question: 'Who is the CEO of Tesla?',
+        answers: [
+            { text: 'Jeff Bezos', correct: false },
+            { text: 'Elon Musk', correct: true },
+            { text: 'Bill Gates', correct: false },
+            { text: 'Tony Stark', correct: false }
+        ]
+    },
+    // Add more questions as needed
+];
+
+startButton.addEventListener('click', startGame);
+nextButton.addEventListener('click', () => {
+    currentQuestionIndex++;
+    setNextQuestion();
+});
+restartButton.addEventListener('click', restartGame);
+
+function startGame() {
+    startButton.classList.add('hide');
+    shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+    currentQuestionIndex = 0;
+    questionContainer.classList.remove('hide');
+    setNextQuestion();
+}
+
+function setNextQuestion() {
+    resetState();
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
+}
+
+function showQuestion(question) {
+    questionElement.innerText = question.question;
+    question.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('btn');
+        if (answer.correct) {
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener('click', selectAnswer);
+        answerButtonsElement.appendChild(button);
+    });
+}
+
+function resetState() {
+    clearStatusClass(document.body);
+    nextButton.classList.add('hide');
+    while (answerButtonsElement.firstChild) {
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+    }
+}
+
+function selectAnswer(e) {
+    const selectedButton = e.target;
+    const correct = selectedButton.dataset.correct;
+    setStatusClass(document.body, correct);
+    Array.from(answerButtonsElement.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct);
+    });
+    if (correct) {
+        score++;
+    }
+    if (shuffledQuestions.length > currentQuestionIndex + 1) {
+        nextButton.classList.remove('hide');
+    } else {
+        questionContainer.classList.add('hide');
+        resultContainer.classList.remove('hide');
+        scoreElement.innerText = score;
+    }
+}
+
+function setStatusClass(element, correct) {
+    clearStatusClass(element);
+    if (correct) {
+        element.classList.add('correct');
+    } else {
+        element.classList.add('wrong');
+    }
+}
+
+function clearStatusClass(element) {
+    element.classList.remove('correct');
+    element.classList.remove('wrong');
+}
+
+function restartGame() {
+    score = 0;
+    resultContainer.classList.add('hide');
+    startButton.classList.remove('hide');
+}
