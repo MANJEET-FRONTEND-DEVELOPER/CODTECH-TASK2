@@ -18,5 +18,10 @@ Objective:
 3.) javascript
 OUTPUT:
        Uploading 42kdazcgw - HTML - OneCompiler - Google Chrome 2024-07-17 10-38-26 (1).mp4…
+![Screenshot (220)](https://github.com/user-attachments/assets/d962f326-dac9-48c0-ad0f-2036cf5ad086)
+![Screenshot (221)](https://github.com/user-attachments/assets/ba5ebe69-9592-4688-81d3-8abd40b4fe58)
+![Screenshot (222)](https://github.com/user-attachments/assets/31806562-803b-4cdd-9151-794280597513)
+![Screenshot (223)](https://github.com/user-attachments/assets/f1ca3b36-2e42-4898-8252-bc457f6102e5)
+
 
 
