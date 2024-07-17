@@ -8,11 +8,11 @@ Mentor: NEELA SANTHOSH KUMAR
 Overview Of Project
 Project: Personal Portfolio Website
 Objective:
-         Create a personal portfolio website to showcase your projects, skills, and
-         experience. This project helps you learn HTML, CSS, and basic JavaScript.
-         Design a responsive layout using CSS Grid or Flexbox. Implement a navigation
-         menu and multiple sections (About, Projects, Contact).
-technologies used:
+         Build an interactive quiz application where users can answer
+         multiple-choice questions and receive feedback. Use
+         JavaScript to handle quiz logic (e.g., scoring, question
+         navigation). Display results at the end of the quiz.
+         technologies used:
 1.) html
 2.) css
 3.) javascript
